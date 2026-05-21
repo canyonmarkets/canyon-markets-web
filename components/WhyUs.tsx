@@ -52,7 +52,7 @@ export default function WhyUs() {
                 <h3 className="font-display font-bold text-xl uppercase tracking-wide text-stone-900 mb-2">
                   {title}
                 </h3>
-                <p className="text-sm leading-relaxed text-stone-600">
+                <p className="text-sm leading-relaxed text-stone-900">
                   {body}
                 </p>
               </div>

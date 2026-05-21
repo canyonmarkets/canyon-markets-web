@@ -18,10 +18,8 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="Canyon Markets" className="h-10 w-auto" />
-              <span className="font-display font-bold text-base tracking-widest uppercase text-stone-100">
+            <div>
+              <span className="font-display font-bold text-2xl tracking-widest uppercase text-stone-100">
                 Canyon Markets
               </span>
             </div>

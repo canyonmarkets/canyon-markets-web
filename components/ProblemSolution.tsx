@@ -50,7 +50,7 @@ export default function ProblemSolution() {
               {OLD_WAY.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <X size={16} className="flex-shrink-0 mt-0.5 text-red-400" strokeWidth={2} />
-                  <span className="text-stone-500 text-sm leading-relaxed">{item}</span>
+                  <span className="text-stone-900 text-sm leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>

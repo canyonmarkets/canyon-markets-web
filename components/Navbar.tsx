@@ -42,7 +42,7 @@ export default function Navbar() {
           className="flex items-center gap-3 group"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Canyon Markets" className="h-10 w-auto" />
+          <img src="/logo.png" alt="Canyon Markets" className="h-10 w-auto" style={{ mixBlendMode: 'multiply' }} />
           <span className="font-display font-bold text-lg tracking-wide uppercase text-iron-800 group-hover:text-brand-500 transition-colors duration-200">
             Canyon Markets
           </span>

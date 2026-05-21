@@ -101,7 +101,7 @@ export default function ContactForm() {
               <h2 className="font-display font-bold text-4xl sm:text-5xl uppercase tracking-wide text-stone-900 leading-tight">
                 Request a Free Break Room Assessment
               </h2>
-              <p className="mt-5 text-stone-600 text-sm leading-relaxed">
+              <p className="mt-5 text-stone-900 text-sm leading-relaxed">
                 Tell us about your facility and we'll schedule a free on-site visit to design
                 a micro-market layout tailored to your team and your space.
               </p>
@@ -120,7 +120,7 @@ export default function ContactForm() {
                       <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#0D9488" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
-                  <span className="text-stone-600 text-sm leading-relaxed">{point}</span>
+                  <span className="text-stone-900 text-sm leading-relaxed">{point}</span>
                 </li>
               ))}
             </ul>
@@ -131,14 +131,14 @@ export default function ContactForm() {
               </p>
               <a
                 href="mailto:info@canyon-markets.com"
-                className="inline-flex items-center gap-2 text-sm text-stone-600 hover:text-brand-600 transition-colors duration-200"
+                className="inline-flex items-center gap-2 text-sm text-stone-900 hover:text-brand-600 transition-colors duration-200"
               >
                 <Mail size={14} strokeWidth={1.5} className="text-brand-500" />
                 info@canyon-markets.com
               </a>
               <a
                 href="tel:+16029356830"
-                className="inline-flex items-center gap-2 text-sm text-stone-600 hover:text-brand-600 transition-colors duration-200"
+                className="inline-flex items-center gap-2 text-sm text-stone-900 hover:text-brand-600 transition-colors duration-200"
               >
                 <Phone size={14} strokeWidth={1.5} className="text-brand-500" />
                 (602) 935-6830
@@ -213,7 +213,7 @@ export default function ContactForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-shrink-0 rounded-lg bg-brand-600 px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all duration-200 hover:bg-brand-700 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-500"
+                  className="flex-shrink-0 rounded-lg bg-brand-600 px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all duration-200 hover:bg-brand-700 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/40 active:scale-[0.97] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-500"
                 >
                   {loading ? 'Sending…' : 'Request Assessment'}
                 </button>

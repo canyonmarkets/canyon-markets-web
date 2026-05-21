@@ -72,7 +72,7 @@ export default function WhoWeServe() {
                   <h3 className="font-display font-bold text-2xl uppercase tracking-wide text-stone-900 mb-3">
                     {headline}
                   </h3>
-                  <p className="text-stone-600 text-sm leading-relaxed">
+                  <p className="text-stone-900 text-sm leading-relaxed">
                     {body}
                   </p>
                 </div>

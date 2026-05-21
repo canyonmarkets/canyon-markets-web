@@ -42,7 +42,7 @@ export default function WhatWeInstall() {
             <h2 className="font-display font-bold text-4xl sm:text-5xl uppercase tracking-wide text-stone-900 max-w-xl leading-tight">
               What We Install in Your Break Room
             </h2>
-            <p className="text-stone-500 text-sm leading-relaxed max-w-sm lg:text-right">
+            <p className="text-stone-700 text-sm leading-relaxed max-w-sm lg:text-right">
               Every installation is designed around your space, your workforce, and your break schedule.
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function WhatWeInstall() {
                 <h3 className={`font-display font-bold text-2xl uppercase tracking-wide mb-3 ${highlight ? 'text-white' : 'text-stone-900'}`}>
                   {title}
                 </h3>
-                <p className={`text-sm leading-relaxed ${highlight ? 'text-brand-100' : 'text-stone-600'}`}>
+                <p className={`text-sm leading-relaxed ${highlight ? 'text-brand-100' : 'text-stone-900'}`}>
                   {body}
                 </p>
               </div>

@@ -29,7 +29,7 @@ export default function Hero() {
             <span className="text-brand-500">Deserves Better</span><br />
             Than a Vending Machine
           </h1>
-          <p className="text-iron-300 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10">
+          <p className="text-white text-lg sm:text-xl leading-relaxed max-w-2xl mb-10">
             Canyon Markets installs fully stocked, zero-cost micro-markets in qualifying
             Phoenix-area workplaces. No equipment costs. No contracts. No hassle.
             Just a better break room — starting day one.
@@ -37,13 +37,13 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4">
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-8 py-4 text-base font-semibold text-white uppercase tracking-wide hover:bg-brand-600 transition-colors duration-200"
+              className="btn-pulse inline-flex items-center justify-center rounded-lg bg-brand-500 px-8 py-4 text-base font-semibold text-white uppercase tracking-wide hover:bg-brand-600 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/40 active:scale-[0.97] active:translate-y-0 transition-all duration-200"
             >
               Request a Free Assessment
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 px-8 py-4 text-base font-semibold text-white uppercase tracking-wide hover:border-brand-500/60 hover:bg-white/5 transition-all duration-200"
+              className="inline-flex items-center justify-center rounded-lg border-2 border-white/30 px-8 py-4 text-base font-semibold text-white uppercase tracking-wide hover:border-brand-500/60 hover:bg-white/5 hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:translate-y-0 transition-all duration-200"
             >
               See How It Works
             </a>

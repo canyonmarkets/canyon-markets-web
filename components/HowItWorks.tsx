@@ -29,7 +29,7 @@ export default function HowItWorks() {
           <h2 className="font-display font-bold text-4xl sm:text-5xl uppercase tracking-wide text-white">
             How It Works
           </h2>
-          <p className="mt-5 text-iron-300 text-base leading-relaxed max-w-lg mx-auto">
+          <p className="mt-5 text-white text-base leading-relaxed max-w-lg mx-auto">
             From first conversation to fully operational market — typically completed within two weeks.
           </p>
           <div className="mt-8 h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent" />
@@ -46,7 +46,7 @@ export default function HowItWorks() {
                 <h3 className="font-display font-bold text-2xl uppercase tracking-wide text-white mb-3">
                   {title}
                 </h3>
-                <p className="text-iron-300 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   {body}
                 </p>
               </div>
@@ -56,12 +56,12 @@ export default function HowItWorks() {
 
         {/* Bottom CTA strip */}
         <div className="mt-12 text-center">
-          <p className="text-iron-400 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             The entire process is free. No contracts. No commitments until you see it and love it.
           </p>
           <a
             href="#contact"
-            className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-8 py-3.5 text-sm font-semibold text-white uppercase tracking-wide hover:bg-brand-600 transition-colors duration-200"
+            className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-8 py-3.5 text-sm font-semibold text-white uppercase tracking-wide hover:bg-brand-600 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/40 active:scale-[0.97] active:translate-y-0 transition-all duration-200"
           >
             Schedule Your Free Assessment
           </a>
