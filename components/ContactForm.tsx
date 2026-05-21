@@ -98,7 +98,7 @@ export default function ContactForm() {
               <p className="text-brand-600 font-mono text-base tracking-[0.3em] uppercase mb-4">
                 Get Started
               </p>
-              <h2 className="font-display font-bold text-4xl sm:text-5xl uppercase tracking-wide text-stone-900 leading-tight">
+              <h2 className="font-display font-bold text-2xl sm:text-5xl uppercase tracking-normal sm:tracking-wide text-stone-900 leading-tight">
                 Request a Free Break Room Assessment
               </h2>
               <p className="mt-5 text-stone-900 text-sm leading-relaxed">
@@ -206,14 +206,14 @@ export default function ContactForm() {
                 </p>
               )}
 
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-xs text-stone-400 leading-relaxed max-w-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p className="text-xs text-stone-400 leading-relaxed sm:max-w-xs">
                   No commitment required. We respond within one business day.
                 </p>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-shrink-0 rounded-lg bg-brand-600 px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all duration-200 hover:bg-brand-700 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/40 active:scale-[0.97] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-500"
+                  className="w-full sm:w-auto rounded-lg bg-brand-600 px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all duration-200 hover:bg-brand-700 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/40 active:scale-[0.97] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-500"
                 >
                   {loading ? 'Sending…' : 'Request Assessment'}
                 </button>

@@ -28,7 +28,7 @@ export default function ProblemSolution() {
           <p className="text-brand-600 font-mono text-base tracking-[0.3em] uppercase mb-4">
             It&#39;s Time to Upgrade
           </p>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl uppercase tracking-wide text-stone-900">
+          <h2 className="font-display font-bold text-2xl sm:text-5xl uppercase tracking-normal sm:tracking-wide text-stone-900">
             The Old Way vs. The Canyon Markets Way
           </h2>
         </div>
