@@ -1,21 +1,25 @@
 import Hero from '@/components/Hero';
-import ProblemSolution from '@/components/ProblemSolution';
+import Marquee from '@/components/Marquee';
+import Concept from '@/components/Concept';
+import System from '@/components/System';
+import Difference from '@/components/Difference';
+import Benefits from '@/components/Benefits';
+import Process from '@/components/Process';
 import WhoWeServe from '@/components/WhoWeServe';
-import WhatWeInstall from '@/components/WhatWeInstall';
-import HowItWorks from '@/components/HowItWorks';
-import WhyUs from '@/components/WhyUs';
 import ContactForm from '@/components/ContactForm';
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <ProblemSolution />
+      <Marquee />
+      <Concept />
+      <System />
+      <Difference />
+      <Benefits />
+      <Process />
       <WhoWeServe />
-      <WhatWeInstall />
-      <HowItWorks />
-      <WhyUs />
-      <ContactForm />
+      <ContactForm source="home" />
     </>
   );
 }

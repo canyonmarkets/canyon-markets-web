@@ -1,90 +1,60 @@
-import { Mail, Phone, MapPin } from 'lucide-react';
-
-const NAV_LINKS = [
-  { label: 'Benefits',     href: '#why-us' },
-  { label: 'Markets',      href: '#what-we-install' },
-  { label: 'Who We Serve', href: '#who-we-serve' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Contact',      href: '#contact' },
-] as const;
+import Link from 'next/link';
+import { SITE } from '@/lib/site';
+import { INDUSTRIES } from '@/lib/industries';
+import { CITIES_DATA } from '@/lib/cities';
 
 export default function Footer() {
   const year = new Date().getFullYear();
-
   return (
-    <footer className="bg-stone-900 border-t border-stone-700">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-stone-700">
-
-          {/* Brand */}
-          <div className="flex flex-col gap-4">
-            <div>
-              <span className="font-display font-bold text-2xl tracking-widest uppercase text-stone-100">
-                Canyon Markets
-              </span>
+    <footer className="border-t border-white/[0.06] bg-base">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-10 border-b border-white/[0.06]">
+          <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/canyon-logo.png" alt="Canyon Markets" className="h-8 w-auto" />
+              <span className="font-display text-base tracking-wide text-iron-100 uppercase">Canyon Markets</span>
             </div>
-            <p className="text-xs leading-relaxed text-stone-400 max-w-xs">
-              Zero-cost micro-market installation and management for Phoenix-area
-              businesses, manufacturers, and schools.
+            <p className="text-xs leading-relaxed text-iron-300 max-w-xs">
+              Family-run, zero-cost micro-markets for {SITE.metro} shift workforces. Serving the Valley since {SITE.since}.
             </p>
           </div>
 
-          {/* Navigation */}
           <div>
-            <p className="text-xs font-mono tracking-[0.2em] uppercase text-stone-500 mb-4">
-              Navigation
-            </p>
+            <p className="text-xs font-mono tracking-[0.2em] uppercase text-iron-400 mb-4">Industries</p>
             <ul className="flex flex-col gap-2.5">
-              {NAV_LINKS.map(({ label, href }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    className="text-sm text-stone-400 hover:text-brand-400 transition-colors duration-200"
-                  >
-                    {label}
-                  </a>
+              {INDUSTRIES.map((i) => (
+                <li key={i.slug}>
+                  <Link href={`/industries/${i.slug}`} className="text-sm text-iron-300 hover:text-ember-300 transition-colors">{i.short}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <p className="text-xs font-mono tracking-[0.2em] uppercase text-stone-500 mb-4">
-              Contact
-            </p>
-            <div className="flex flex-col gap-3">
-              <a
-                href="mailto:info@canyon-markets.com"
-                className="inline-flex items-center gap-2 text-sm text-stone-400 hover:text-brand-400 transition-colors duration-200"
-              >
-                <Mail size={14} strokeWidth={1.5} />
-                info@canyon-markets.com
-              </a>
-              <a
-                href="tel:+16029356830"
-                className="inline-flex items-center gap-2 text-sm text-stone-400 hover:text-brand-400 transition-colors duration-200"
-              >
-                <Phone size={14} strokeWidth={1.5} />
-                (602) 935-6830
-              </a>
-              <span className="inline-flex items-center gap-2 text-sm text-stone-400">
-                <MapPin size={14} strokeWidth={1.5} />
-                Phoenix Metro Area, AZ
-              </span>
-            </div>
+            <p className="text-xs font-mono tracking-[0.2em] uppercase text-iron-400 mb-4">Locations</p>
+            <ul className="flex flex-col gap-2.5">
+              {CITIES_DATA.map((c) => (
+                <li key={c.slug}>
+                  <Link href={`/locations/${c.slug}`} className="text-sm text-iron-300 hover:text-ember-300 transition-colors">{c.label}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
+          <div>
+            <p className="text-xs font-mono tracking-[0.2em] uppercase text-iron-400 mb-4">Contact</p>
+            <div className="flex flex-col gap-3">
+              <a href={`mailto:${SITE.email}`} className="text-sm text-iron-300 hover:text-ember-300 transition-colors">{SITE.email}</a>
+              <a href={`tel:${SITE.phoneHref}`} className="text-sm text-iron-300 hover:text-ember-300 transition-colors">{SITE.phone}</a>
+              <span className="text-sm text-iron-300">{SITE.metro}, AZ</span>
+            </div>
+          </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-stone-600">
-            &copy; {year} Canyon Markets LLC. All rights reserved.
-          </p>
-          <p className="text-xs text-stone-700 font-mono tracking-wide">
-            Phoenix Metro Area Micro-Markets
-          </p>
+          <p className="text-xs text-iron-400">&copy; {year} Canyon Markets LLC. All rights reserved.</p>
+          <p className="text-xs text-iron-500 font-mono tracking-wide uppercase">Fresh On-Site Markets · {SITE.metro}</p>
         </div>
       </div>
     </footer>

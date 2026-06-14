@@ -1,108 +1,32 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-
-const NAV_LINKS = [
-  { label: 'Benefits',   href: '#why-us' },
-  { label: 'Markets',    href: '#what-we-install' },
-  { label: 'Who We Serve', href: '#who-we-serve' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Contact',    href: '#contact' },
-] as const;
+import Link from 'next/link';
+import { SITE } from '@/lib/site';
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const handleLink = (href: string) => {
-    setMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <header
-      className={[
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-white shadow-sm border-b border-stone-200' : 'bg-white/95',
-      ].join(' ')}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-
-        {/* Logo */}
-        <a
-          href="#home"
-          onClick={(e) => { e.preventDefault(); handleLink('#home'); }}
-          className="flex items-center gap-3 group"
-        >
+    <header id="nav" className="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+      <nav className="mx-auto max-w-7xl px-6 lg:px-10 h-20 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Canyon Markets" className="h-10 w-auto" style={{ mixBlendMode: 'multiply' }} />
-          <span className="font-display font-bold text-lg tracking-wide uppercase text-iron-800 group-hover:text-brand-500 transition-colors duration-200">
-            Canyon Markets
-          </span>
-        </a>
+          <img src="/canyon-logo.png" alt="Canyon Markets" className="h-10 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
+          <span className="font-display text-[19px] sm:text-[21px] tracking-wide text-iron-100 leading-none">CANYON MARKETS</span>
+        </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={(e) => { e.preventDefault(); handleLink(href); }}
-              className="text-sm font-medium text-stone-600 hover:text-brand-600 transition-colors duration-200"
-            >
-              {label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); handleLink('#contact'); }}
-            className="ml-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 transition-colors duration-200"
-          >
-            Free Assessment
+        <div className="hidden md:flex items-center gap-9 text-[13px] font-medium text-iron-300">
+          <Link href="/#concept" className="ulink hover:text-white transition-colors">The Concept</Link>
+          <Link href="/#system" className="ulink hover:text-white transition-colors">The System</Link>
+          <Link href="/#process" className="ulink hover:text-white transition-colors">Process</Link>
+          <Link href="/#serve" className="ulink hover:text-white transition-colors">Who We Serve</Link>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <a href={`tel:${SITE.phoneHref}`} className="hidden lg:inline-flex items-center gap-2 text-[13px] font-mono text-iron-300 hover:text-iron-100 transition-colors">
+            <span className="h-1.5 w-1.5 rounded-full bg-ember-500"></span>{SITE.phone}
           </a>
-        </nav>
-
-        {/* Mobile hamburger */}
-        <button
-          className="lg:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className={`block h-0.5 w-6 bg-stone-700 transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block h-0.5 w-6 bg-stone-700 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block h-0.5 w-6 bg-stone-700 transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      <div className={`lg:hidden overflow-hidden transition-all duration-300 ${menuOpen ? 'max-h-96' : 'max-h-0'}`}>
-        <nav className="bg-white border-t border-stone-100 px-6 py-4 flex flex-col gap-1">
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={(e) => { e.preventDefault(); handleLink(href); }}
-              className="py-3 text-sm font-medium text-stone-600 hover:text-brand-600 border-b border-stone-100 last:border-0 transition-colors duration-200"
-            >
-              {label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); handleLink('#contact'); }}
-            className="mt-3 rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white text-center hover:bg-brand-700 transition-colors duration-200"
-          >
+          <Link href="/#contact" className="inline-flex items-center rounded-full border border-ember-500/40 bg-ember-500/10 px-5 py-2.5 text-[12px] font-semibold uppercase tracking-wider text-ember-300 hover:bg-ember-500 hover:text-white hover:border-ember-500 transition-all duration-200">
             Free Assessment
-          </a>
-        </nav>
-      </div>
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 }

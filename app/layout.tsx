@@ -1,94 +1,58 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter, Space_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SiteAnimations from '@/components/SiteAnimations';
+import { SITE } from '@/lib/site';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+const inter = Inter({ variable: '--font-inter', subsets: ['latin'], display: 'swap' });
+const spaceMono = Space_Mono({ variable: '--font-space-mono', weight: ['400', '700'], subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
-  // ── Titles ──────────────────────────────────────────────────────────
   title: {
-    default: 'Canyon Markets | Free Micro-Market Installation — Phoenix, AZ',
+    default: 'Canyon Markets | Zero-Cost Micro-Markets for Phoenix Shift Workforces',
     template: '%s | Canyon Markets',
   },
-
-  // ── Core description (shows in Google search snippets) ───────────────
   description:
-    'Canyon Markets upgrades break rooms for Phoenix-area manufacturers, distributors, and schools with fully stocked micro-markets at zero cost. No contracts. No equipment fees. We install, stock, and maintain everything.',
-
-  // ── Keywords ────────────────────────────────────────────────────────
+    'Canyon Markets builds fully-managed, zero-cost micro-markets for Phoenix-area manufacturing, distribution, production, warehousing, and call-center teams. Fresh food on your floor — live in 14 days.',
   keywords: [
     'micro market Phoenix AZ',
-    'break room upgrade Phoenix',
-    'free micro-market installation',
-    'vending machine replacement Phoenix',
-    'office break room micro market',
-    'manufacturing break room Phoenix',
-    'school staff vending Phoenix',
-    'cashless vending Arizona',
-    'workplace food service Phoenix',
-    'micro-market Mesa Chandler Scottsdale',
-    'zero cost vending installation',
+    'break room micro market',
+    'micro market for manufacturing Phoenix',
+    'distribution center break room',
+    'warehouse vending Phoenix',
+    'call center break room',
+    'self-checkout micro market Arizona',
+    'zero cost micro market',
+    'shift workforce food service Phoenix',
     'Canyon Markets',
   ],
-
-  // ── Authorship ───────────────────────────────────────────────────────
-  authors: [{ name: 'Canyon Markets', url: 'https://canyon-markets.com' }],
+  authors: [{ name: 'Canyon Markets', url: SITE.url }],
   creator: 'Canyon Markets',
   publisher: 'Canyon Markets',
-
-  // ── Canonical base URL ───────────────────────────────────────────────
-  metadataBase: new URL('https://canyon-markets.com'),
+  metadataBase: new URL(SITE.url),
   alternates: { canonical: '/' },
-
-  // ── Open Graph (Facebook, LinkedIn, iMessage previews) ───────────────
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://canyon-markets.com',
+    url: SITE.url,
     siteName: 'Canyon Markets',
-    title: 'Canyon Markets | Free Micro-Market Installation — Phoenix, AZ',
+    title: 'Canyon Markets | Zero-Cost Micro-Markets for Phoenix Shift Workforces',
     description:
-      'Fully stocked micro-markets at zero cost for Phoenix-area manufacturers, distributors, and schools. We install everything and keep it stocked — for free.',
-    images: [
-      {
-        url: '/breakroom-workers.png',
-        width: 1200,
-        height: 630,
-        alt: 'Canyon Markets break room micro-market installation — Phoenix, AZ',
-      },
-    ],
+      'Fresh, fully-managed micro-markets on your floor — for the shift teams who can’t step out for lunch. Zero cost. Live in 14 days.',
+    images: [{ url: '/mm-cafeteria.png', width: 1200, height: 630, alt: 'A Canyon Markets micro-market in use in a facility break room' }],
   },
-
-  // ── Twitter / X Card ────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: 'Canyon Markets | Free Micro-Market Installation — Phoenix, AZ',
-    description:
-      'Zero-cost micro-markets for Phoenix-area workplaces. We install, stock, and maintain everything.',
-    images: ['/breakroom-workers.png'],
+    title: 'Canyon Markets | Zero-Cost Micro-Markets for Phoenix Shift Workforces',
+    description: 'Zero-cost, fully-managed micro-markets for Phoenix-area shift workforces.',
+    images: ['/mm-cafeteria.png'],
   },
-
-  // ── Crawling & indexing ──────────────────────────────────────────────
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
 };
 
@@ -97,69 +61,42 @@ const jsonLd = {
   '@type': 'LocalBusiness',
   name: 'Canyon Markets',
   description:
-    'Canyon Markets installs fully stocked, zero-cost micro-markets in qualifying Phoenix-area workplaces — manufacturing facilities, distribution centers, and schools.',
-  url: 'https://canyon-markets.com',
-  telephone: '+16029356830',
-  email: 'info@canyon-markets.com',
-  logo: 'https://canyon-markets.com/logo.png',
-  image: 'https://canyon-markets.com/breakroom-workers.png',
-  priceRange: 'Free Installation',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Phoenix',
-    addressRegion: 'AZ',
-    addressCountry: 'US',
-  },
+    'Family-run operator of fully-managed, zero-cost workplace micro-markets serving Phoenix-area manufacturing, distribution, production, warehousing, and call-center facilities since 2017.',
+  url: SITE.url,
+  telephone: SITE.phoneHref,
+  email: SITE.email,
+  logo: `${SITE.url}/canyon-logo.png`,
+  image: `${SITE.url}/mm-cafeteria.png`,
+  foundingDate: '2017',
+  priceRange: 'Free installation — $0 to the employer',
+  address: { '@type': 'PostalAddress', addressLocality: 'Phoenix', addressRegion: 'AZ', addressCountry: 'US' },
   areaServed: [
-    { '@type': 'City', name: 'Phoenix', containedInPlace: { '@type': 'State', name: 'Arizona' } },
-    { '@type': 'City', name: 'Mesa',    containedInPlace: { '@type': 'State', name: 'Arizona' } },
-    { '@type': 'City', name: 'Chandler',containedInPlace: { '@type': 'State', name: 'Arizona' } },
-    { '@type': 'City', name: 'Gilbert', containedInPlace: { '@type': 'State', name: 'Arizona' } },
-    { '@type': 'City', name: 'Scottsdale',containedInPlace: { '@type': 'State', name: 'Arizona' } },
-    { '@type': 'City', name: 'Tempe',   containedInPlace: { '@type': 'State', name: 'Arizona' } },
+    { '@type': 'City', name: 'Phoenix' },
+    { '@type': 'City', name: 'Mesa' },
+    { '@type': 'City', name: 'Chandler' },
+    { '@type': 'City', name: 'Gilbert' },
+    { '@type': 'City', name: 'Scottsdale' },
+    { '@type': 'City', name: 'Tempe' },
   ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Micro-Market Services',
     itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Free Micro-Market Installation',
-          description:
-            'Complete micro-market installation including open shelving, smart checkout kiosk, and refrigerated coolers at zero cost to the employer.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Ongoing Restocking & Maintenance',
-          description:
-            'Real-time inventory monitoring with proactive restocking, equipment maintenance, and worker support — all fully managed.',
-        },
-      },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Free Micro-Market Installation', description: 'Complete micro-market — open shelving, self-checkout kiosk, glass-door coolers and freezers — installed at zero cost to the employer.' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Ongoing Restocking & Maintenance', description: 'Inventory monitoring, proactive restocking across every shift, equipment maintenance, and worker support — fully managed.' } },
     ],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en-US"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-sans">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+    <html lang="en-US" className={`${inter.variable} ${spaceMono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col font-sans text-iron-200">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <SiteAnimations />
       </body>
     </html>
   );

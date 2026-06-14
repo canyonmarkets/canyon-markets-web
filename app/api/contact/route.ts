@@ -9,19 +9,20 @@ export async function POST(req: Request) {
   const { Resend } = await import('resend');
   const resend = new Resend(apiKey);
 
-  const { firstName, lastName, email, company, location, headcount, details } = await req.json();
+  const { firstName, lastName, email, company, location, headcount, details, source } = await req.json();
 
   const { error } = await resend.emails.send({
     from: 'Canyon Markets <noreply@canyon-markets.com>',
     to: 'info@canyon-markets.com',
     replyTo: email,
-    subject: `New Break Room Assessment Request — ${company}`,
+    subject: `New Break Room Assessment Request — ${company}${source ? ` (${source})` : ''}`,
     text: [
       `Name: ${firstName} ${lastName}`,
       `Email: ${email}`,
       `Company: ${company}`,
       `Location: ${location}`,
       `Headcount: ${headcount}`,
+      `Lead source: ${source || 'home'}`,
       ``,
       `Break Room Details:`,
       details,

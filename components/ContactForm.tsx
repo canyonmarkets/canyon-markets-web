@@ -1,221 +1,88 @@
 'use client';
 
 import { useState } from 'react';
-import { CheckCircle, Mail, Phone } from 'lucide-react';
+import { SITE } from '@/lib/site';
 
 type FormState = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  company: string;
-  location: string;
-  headcount: string;
-  details: string;
+  firstName: string; lastName: string; email: string; company: string;
+  location: string; headcount: string; details: string;
 };
+const EMPTY: FormState = { firstName: '', lastName: '', email: '', company: '', location: '', headcount: '', details: '' };
 
-const EMPTY: FormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  company: '',
-  location: '',
-  headcount: '',
-  details: '',
-};
-
-function Field({
-  label,
-  id,
-  type = 'text',
-  value,
-  onChange,
-  required,
-  placeholder,
-}: {
-  label: string;
-  id: keyof FormState;
-  type?: string;
-  value: string;
-  onChange: (id: keyof FormState, val: string) => void;
-  required?: boolean;
-  placeholder?: string;
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs font-mono tracking-[0.15em] uppercase text-stone-500">
-        {label}{required && <span className="text-brand-600 ml-0.5">*</span>}
-      </label>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        required={required}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(id, e.target.value)}
-        className="w-full rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm text-stone-800 placeholder-stone-300 outline-none transition-all duration-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
-      />
-    </div>
-  );
-}
-
-export default function ContactForm() {
+export default function ContactForm({ source = 'home' }: { source?: string }) {
   const [form, setForm] = useState<FormState>(EMPTY);
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [sendError, setSendError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleChange = (id: keyof FormState, val: string) =>
-    setForm((prev) => ({ ...prev, [id]: val }));
+  const set = (k: keyof FormState, v: string) => setForm((p) => ({ ...p, [k]: v }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setSendError(false);
-
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
-
+    setLoading(true); setError(false);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, source }),
+      });
+      if (res.ok) setSubmitted(true); else setError(true);
+    } catch { setError(true); }
     setLoading(false);
-    if (res.ok) {
-      setSubmitted(true);
-    } else {
-      setSendError(true);
-    }
   };
 
   return (
-    <section id="contact" className="bg-iron-300 px-6 py-24">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 lg:items-start">
-
-          {/* Left: pitch */}
-          <div className="flex flex-col gap-10">
-            <div>
-              <p className="text-brand-600 font-mono text-base tracking-[0.3em] uppercase mb-4">
-                Get Started
-              </p>
-              <h2 className="font-display font-bold text-2xl sm:text-5xl uppercase tracking-normal sm:tracking-wide text-stone-900 leading-tight">
-                Request a Free Break Room Assessment
-              </h2>
-              <p className="mt-5 text-stone-900 text-sm leading-relaxed">
-                Tell us about your facility and we'll schedule a free on-site visit to design
-                a micro-market layout tailored to your team and your space.
-              </p>
-            </div>
-
-            <ul className="flex flex-col gap-4">
-              {[
-                'No cost, no contracts, no obligation',
-                'On-site visit and custom layout design',
-                'Serving Phoenix, Mesa, Chandler, Gilbert, Scottsdale, and Tempe',
-                'Response within one business day',
-              ].map((point) => (
-                <li key={point} className="flex items-start gap-3">
-                  <span className="mt-0.5 flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-brand-100">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                      <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#0D9488" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  <span className="text-stone-900 text-sm leading-relaxed">{point}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="border-t border-stone-200 pt-8 flex flex-col gap-3">
-              <p className="text-xs font-mono tracking-[0.2em] uppercase text-stone-400 mb-1">
-                Direct Contact
-              </p>
-              <a
-                href="mailto:info@canyon-markets.com"
-                className="inline-flex items-center gap-2 text-sm text-stone-900 hover:text-brand-600 transition-colors duration-200"
-              >
-                <Mail size={14} strokeWidth={1.5} className="text-brand-500" />
-                info@canyon-markets.com
-              </a>
-              <a
-                href="tel:+16029356830"
-                className="inline-flex items-center gap-2 text-sm text-stone-900 hover:text-brand-600 transition-colors duration-200"
-              >
-                <Phone size={14} strokeWidth={1.5} className="text-brand-500" />
-                (602) 935-6830
-              </a>
-            </div>
+    <section id="contact" className="relative py-28 lg:py-36 bg-slate-900/40 border-t border-white/[0.06] overflow-hidden">
+      <div className="blob bg-ember-700 h-[480px] w-[480px] right-[-14rem] bottom-[-10rem] opacity-30"></div>
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 grid lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-16 items-start">
+        <div data-reveal>
+          <div className="eyebrow text-ember-400 mb-5 flex items-center gap-3"><span className="h-px w-8 bg-ember-500/60"></span> Get Started</div>
+          <h2 className="font-display uppercase text-iron-100 leading-[1.0] tracking-tight text-4xl sm:text-6xl">
+            Request your free<br />break room <span className="grad-ember">assessment.</span>
+          </h2>
+          <p className="mt-5 text-iron-200 text-base leading-relaxed max-w-md">
+            Tell us about your facility and we&rsquo;ll schedule a free on-site visit to design a market tailored to your team and your shifts.
+          </p>
+          <ul className="mt-9 flex flex-col gap-4">
+            {['No cost or obligation for the assessment', 'On-site visit and custom layout design', 'Phoenix, Mesa, Chandler, Gilbert, Scottsdale & Tempe', 'Response within one business day'].map((t) => (
+              <li key={t} className="flex items-start gap-3 text-iron-200 text-sm"><span className="check"></span>{t}</li>
+            ))}
+          </ul>
+          <div className="mt-10 pt-8 border-t border-white/[0.08] flex flex-col gap-3">
+            <span className="font-mono text-[10px] tracking-widest uppercase text-iron-300">Direct Contact</span>
+            <a href={`mailto:${SITE.email}`} className="ulink inline-flex items-center gap-2.5 text-iron-100 hover:text-ember-300 transition-colors w-max">{SITE.email}</a>
+            <a href={`tel:${SITE.phoneHref}`} className="ulink inline-flex items-center gap-2.5 text-iron-100 hover:text-ember-300 transition-colors w-max">{SITE.phone}</a>
           </div>
+        </div>
 
-          {/* Right: form / success */}
+        <div data-reveal>
           {submitted ? (
-            <div className="flex flex-col items-center gap-5 rounded-2xl border border-brand-200 bg-white px-10 py-16 text-center">
-              <CheckCircle size={48} strokeWidth={1.5} className="text-brand-600" />
-              <h3 className="font-display font-bold text-2xl uppercase tracking-wide text-stone-900">
-                Request Received
-              </h3>
-              <p className="text-stone-600 text-sm leading-relaxed max-w-sm">
-                Thank you, {form.firstName}. We'll review your facility details and reach out
-                within one business day to schedule your free on-site assessment.
-              </p>
-              <button
-                onClick={() => { setSubmitted(false); setForm(EMPTY); }}
-                className="mt-2 text-xs font-mono tracking-widest uppercase text-brand-600 hover:text-brand-700 transition-colors duration-200"
-              >
-                Submit another request
-              </button>
+            <div className="rounded-3xl glass-strong p-12 text-center flex flex-col items-center gap-5">
+              <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-ember-500/15 border border-ember-500/40">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#F4A06A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </span>
+              <h3 className="font-display text-2xl uppercase text-iron-100">Request Received</h3>
+              <p className="text-iron-200 text-sm leading-relaxed max-w-sm">Thanks, {form.firstName || 'there'}! We&rsquo;ll review your facility details and reach out within one business day to schedule your free on-site assessment.</p>
             </div>
           ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="rounded-2xl border border-stone-200 bg-white px-8 py-10 flex flex-col gap-6 shadow-sm"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <Field label="First Name" id="firstName" value={form.firstName} onChange={handleChange} required placeholder="Jane" />
-                <Field label="Last Name"  id="lastName"  value={form.lastName}  onChange={handleChange} required placeholder="Smith" />
+            <form onSubmit={submit} className="rounded-3xl glass p-7 sm:p-9 flex flex-col gap-5">
+              <div className="grid sm:grid-cols-2 gap-5">
+                <div className="field"><label>First Name <i>*</i></label><input required value={form.firstName} onChange={(e) => set('firstName', e.target.value)} placeholder="Jane" /></div>
+                <div className="field"><label>Last Name <i>*</i></label><input required value={form.lastName} onChange={(e) => set('lastName', e.target.value)} placeholder="Smith" /></div>
               </div>
-
-              <Field label="Work Email" id="email" type="email" value={form.email} onChange={handleChange} required placeholder="jane@yourcompany.com" />
-              <Field label="Company / Organization" id="company" value={form.company} onChange={handleChange} required placeholder="Acme Manufacturing" />
-              <Field label="Facility Location / City" id="location" value={form.location} onChange={handleChange} required placeholder="Chandler, AZ" />
-              <Field label="Approximate Headcount" id="headcount" value={form.headcount} onChange={handleChange} placeholder="e.g. 150 employees" />
-
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="details" className="text-xs font-mono tracking-[0.15em] uppercase text-stone-500">
-                  Tell us about your break room space<span className="text-brand-600 ml-0.5">*</span>
-                </label>
-                <textarea
-                  id="details"
-                  name="details"
-                  required
-                  rows={4}
-                  value={form.details}
-                  placeholder="e.g. Two break rooms, about 400 sq ft each. Currently have two old vending machines we'd like to replace."
-                  onChange={(e) => handleChange('details', e.target.value)}
-                  className="w-full rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm text-stone-800 placeholder-stone-300 outline-none transition-all duration-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 resize-none"
-                />
+              <div className="field"><label>Work Email <i>*</i></label><input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="jane@yourcompany.com" /></div>
+              <div className="field"><label>Company / Organization <i>*</i></label><input required value={form.company} onChange={(e) => set('company', e.target.value)} placeholder="Acme Manufacturing" /></div>
+              <div className="grid sm:grid-cols-2 gap-5">
+                <div className="field"><label>Facility City <i>*</i></label><input required value={form.location} onChange={(e) => set('location', e.target.value)} placeholder="Chandler, AZ" /></div>
+                <div className="field"><label>Approx. Headcount</label><input value={form.headcount} onChange={(e) => set('headcount', e.target.value)} placeholder="e.g. 150" /></div>
               </div>
-
-              <div className="h-px bg-stone-100" />
-
-              {sendError && (
-                <p className="text-sm text-red-500 text-center">
-                  Something went wrong. Please email us at{' '}
-                  <a href="mailto:info@canyon-markets.com" className="underline">
-                    info@canyon-markets.com
-                  </a>.
-                </p>
-              )}
-
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <p className="text-xs text-stone-400 leading-relaxed sm:max-w-xs">
-                  No commitment required. We respond within one business day.
-                </p>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full sm:w-auto rounded-lg bg-brand-600 px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all duration-200 hover:bg-brand-700 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/40 active:scale-[0.97] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-500"
-                >
+              <div className="field"><label>Tell us about your facility &amp; shifts <i>*</i></label><textarea required rows={4} value={form.details} onChange={(e) => set('details', e.target.value)} placeholder="e.g. Two shifts plus an overnight crew, ~180 on site. One break room with two old vending machines we’d love to replace."></textarea></div>
+              {error && <p className="text-sm text-red-400 text-center">Something went wrong. Please email us at <a href={`mailto:${SITE.email}`} className="underline">{SITE.email}</a>.</p>}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-1">
+                <p className="text-[11px] text-iron-300 leading-relaxed sm:max-w-[16rem]">No commitment required. We respond within one business day.</p>
+                <button type="submit" disabled={loading} className="btn-ember inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-wider text-white w-full sm:w-auto disabled:opacity-60">
                   {loading ? 'Sending…' : 'Request Assessment'}
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </button>
               </div>
             </form>
