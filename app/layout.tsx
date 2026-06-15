@@ -1,10 +1,18 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Mono } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SiteAnimations from '@/components/SiteAnimations';
 import { SITE } from '@/lib/site';
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+// A real Search Console token is a long alphanumeric string. A value beginning
+// with "G-" is a GA4 Measurement ID pasted into the wrong env var — ignore it so
+// we never emit an invalid google-site-verification meta tag.
+const RAW_GSC = process.env.NEXT_PUBLIC_GSC_VERIFY;
+const GSC_VERIFY = RAW_GSC && !RAW_GSC.startsWith('G-') ? RAW_GSC : undefined;
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'], display: 'swap' });
 const spaceMono = Space_Mono({ variable: '--font-space-mono', weight: ['400', '700'], subsets: ['latin'], display: 'swap' });
@@ -54,6 +62,8 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
+  // Google Search Console domain verification (set NEXT_PUBLIC_GSC_VERIFY in Netlify env vars)
+  ...(GSC_VERIFY ? { verification: { google: GSC_VERIFY } } : {}),
 };
 
 const jsonLd = {
@@ -97,6 +107,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="flex-1">{children}</main>
         <Footer />
         <SiteAnimations />
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
