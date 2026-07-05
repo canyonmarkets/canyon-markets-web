@@ -33,7 +33,7 @@ export default function Difference() {
 
           <div data-reveal className="grid sm:grid-cols-2 gap-4">
             {CARDS.map((c, i) => (
-              <div key={c.title} className="rounded-2xl glass p-6 hover:border-ember-500/30 transition-colors duration-300">
+              <div key={c.title} className="card-spot rounded-2xl glass p-6 hover:border-ember-500/30 transition-colors duration-300">
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-ember-500/12 border border-ember-500/30 mb-4">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">{ICONS[i]}</svg>
                 </span>

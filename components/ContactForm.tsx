@@ -57,9 +57,9 @@ export default function ContactForm({ source = 'home' }: { source?: string }) {
 
         <div data-reveal>
           {submitted ? (
-            <div className="rounded-3xl glass-strong p-12 text-center flex flex-col items-center gap-5">
+            <div className="success-card rounded-3xl glass-strong p-12 text-center flex flex-col items-center gap-5">
               <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-ember-500/15 border border-ember-500/40">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#F4A06A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path className="check-draw" d="M5 13l4 4L19 7" pathLength={1} stroke="#F4A06A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /></svg>
               </span>
               <h3 className="font-display text-2xl uppercase text-iron-100">Request Received</h3>
               <p className="text-iron-200 text-sm leading-relaxed max-w-sm">Thanks, {form.firstName || 'there'}! We&rsquo;ll review your facility details and reach out within one business day to schedule your free on-site assessment.</p>

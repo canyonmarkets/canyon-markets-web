@@ -50,14 +50,37 @@ export default function SiteAnimations() {
     });
     cleanups.push(() => hotHandlers.forEach(([h, fn]) => h.removeEventListener('click', fn)));
 
-    // ── Count-ups ──
+    const FINE_POINTER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // ── Card spotlight (shared handler; CSS ::before renders it, hover-only media query) ──
+    if (FINE_POINTER) {
+      const onCardMove = (e: PointerEvent) => {
+        const card = (e.target as Element | null)?.closest?.('.card-spot') as HTMLElement | null;
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100) + '%');
+        card.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100) + '%');
+      };
+      document.addEventListener('pointermove', onCardMove, { passive: true });
+      cleanups.push(() => document.removeEventListener('pointermove', onCardMove));
+    }
+
+    // ── Count-ups (power4.out settle + one-time ember glow on completion) ──
     const counts = Array.from(document.querySelectorAll<HTMLElement>('[data-count]'));
     const animateCount = (el: HTMLElement) => {
       const target = +(el.dataset.count || '0');
       const suffix = el.dataset.suffix || '';
       if (!REDUCE) {
         const o = { v: 0 };
-        track(gsap.to(o, { v: target, duration: 1.6, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(o.v) + suffix; } }));
+        track(gsap.to(o, {
+          v: target, duration: 2.1, ease: 'power4.out',
+          onUpdate: () => { el.textContent = Math.round(o.v) + suffix; },
+          onComplete: () => {
+            track(gsap.fromTo(el,
+              { textShadow: '0 0 0px rgba(201,75,12,0)' },
+              { textShadow: '0 0 16px rgba(201,75,12,0.75)', duration: 0.35, ease: 'power2.out', yoyo: true, repeat: 1, clearProps: 'textShadow' }));
+          },
+        }));
       } else { el.textContent = target + suffix; }
     };
 
@@ -149,6 +172,60 @@ export default function SiteAnimations() {
           track(gsap.to(el, { yPercent: -5 + (i % 3) * 2.5, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 0.6 } }));
         });
       }
+
+      // ── Hero scroll handoff — pin-free "curtain lift" scrub ──
+      // Deliberately NOT a ScrollTrigger pin: the pin-spacer + pinSpacing:false mutated
+      // layout and broke the fixed header's paint. Instead the hero content parallaxes
+      // down (slower than the scroll) while scaling and fading, so the Marquee/next
+      // section rises over it naturally. Transform-only on an inner wrapper — zero
+      // layout mutation, fail-open (no JS = plain document flow).
+      const heroWrap = document.querySelector<HTMLElement>('[data-hero-wrap]');
+      const heroSec = document.getElementById('hero');
+      if (heroSec && heroWrap) {
+        track(gsap.to(heroWrap, {
+          yPercent: 18, scale: 0.94, autoAlpha: 0, transformOrigin: '50% 30%', ease: 'none',
+          scrollTrigger: { trigger: heroSec, start: 'top top', end: 'bottom 35%', scrub: 0.5 },
+        }));
+      }
+
+      // ── Featured card 3D tilt (pointer devices only) ──
+      if (FINE_POINTER) {
+        document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+          gsap.set(card, { transformPerspective: 900 });
+          const rx = gsap.quickTo(card, 'rotationX', { duration: 0.45, ease: 'power3' });
+          const ry = gsap.quickTo(card, 'rotationY', { duration: 0.45, ease: 'power3' });
+          const enter = () => {
+            // Stop Tailwind's transition-all / reveal transitions from fighting per-frame transforms
+            card.style.transitionProperty = 'border-color, background-color, box-shadow';
+          };
+          const move = (e: PointerEvent) => {
+            const r = card.getBoundingClientRect();
+            const dx = (e.clientX - r.left) / r.width - 0.5;
+            const dy = (e.clientY - r.top) / r.height - 0.5;
+            rx(dy * -2); ry(dx * 2);
+          };
+          const leave = () => { track(gsap.to(card, { rotationX: 0, rotationY: 0, duration: 0.9, ease: 'elastic.out(1, 0.5)' })); };
+          card.addEventListener('pointerenter', enter);
+          card.addEventListener('pointermove', move);
+          card.addEventListener('pointerleave', leave);
+          cleanups.push(() => {
+            card.removeEventListener('pointerenter', enter);
+            card.removeEventListener('pointermove', move);
+            card.removeEventListener('pointerleave', leave);
+          });
+        });
+      }
+
+      // ── Process timeline draw-in: connectors scrub scaleY, markers pop as line reaches them ──
+      document.querySelectorAll<HTMLElement>('#process .connector').forEach((c) => {
+        track(gsap.fromTo(c, { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: c, start: 'top 80%', end: 'bottom 55%', scrub: 0.6 } }));
+      });
+      document.querySelectorAll<HTMLElement>('#process .node:not(#goLive)').forEach((n) => {
+        const pop = gsap.timeline({ scrollTrigger: { trigger: n, start: 'top 82%' } });
+        pop.from(n, { scale: 0.6, duration: 0.45, ease: 'back.out(2.4)' })
+          .fromTo(n, { boxShadow: '0 0 0px 0px rgba(201,75,12,0)' }, { boxShadow: '0 0 22px 2px rgba(201,75,12,0.5)', duration: 0.3, ease: 'power2.out', yoyo: true, repeat: 1 }, '<0.1');
+        cleanups.push(() => pop.kill());
+      });
     } else {
       counts.forEach(animateCount);
     }

@@ -57,10 +57,10 @@ export default function Concept() {
         </div>
 
         <div className="mt-16 grid sm:grid-cols-3 gap-4">
-          {GALLERY.map((g) => (
-            <figure key={g.caption} data-reveal className="group relative rounded-2xl overflow-hidden border border-white/10">
+          {GALLERY.map((g, i) => (
+            <figure key={g.caption} data-reveal tabIndex={0} className="group relative rounded-2xl overflow-hidden border border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ember-500/60">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={g.src} width={1536} height={1024} alt={g.alt} className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={g.src} width={1536} height={1024} alt={g.alt} className={`kb-img duotone w-full h-56 object-cover ${i % 2 ? 'kb-b' : 'kb-a'}`} />
               <figcaption className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-base to-transparent font-mono text-[10px] tracking-widest uppercase text-iron-200">{g.caption}</figcaption>
             </figure>
           ))}

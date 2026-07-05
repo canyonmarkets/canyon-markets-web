@@ -76,6 +76,43 @@ body::after {
 .spotlight::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(460px circle at var(--mx) var(--my), rgba(201,75,12,0.18), transparent 62%); transition: background .2s ease-out; }
 
+/* Card pointer spotlight — hover-capable devices only (no touch) */
+@media (hover: hover) and (pointer: fine) {
+  .card-spot { position: relative; }
+  .card-spot::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    opacity: 0; transition: opacity .35s ease; z-index: 0;
+    background: radial-gradient(260px circle at var(--mx) var(--my), rgba(201,75,12,0.14), transparent 65%); }
+  .card-spot:hover::before { opacity: 1; }
+}
+
+/* Mobile nav drawer */
+.menu-overlay { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column;
+  background: rgba(16,18,26,0.97); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility 0s linear .35s; }
+.menu-overlay.open { opacity: 1; visibility: visible; transition: opacity .35s ease; }
+.menu-overlay .m-item { opacity: 0; transform: translateY(18px);
+  transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1), color .2s ease; }
+.menu-overlay.open .m-item { opacity: 1; transform: none; }
+
+/* Contact form success celebration (CSS-only: fails open, no-JS-safe) */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes successPop { from { opacity: 0; transform: scale(0.94); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  .success-card { animation: successPop .5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes checkDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  .check-draw { stroke-dasharray: 1; animation: checkDraw .5s ease-out .25s both; }
+}
+
+/* Ken Burns gallery — slow alternating zoom-pan + ember duotone that resolves on hover/focus */
+.kb-img { will-change: transform; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes kbA { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(-1.5%, -1%); } }
+  @keyframes kbB { from { transform: scale(1.06) translate(1.5%, -1%); } to { transform: scale(1) translate(0, 0); } }
+  .kb-a { animation: kbA 14s ease-in-out infinite alternate; }
+  .kb-b { animation: kbB 14s ease-in-out infinite alternate; }
+}
+.duotone { filter: grayscale(0.65) sepia(0.4) hue-rotate(-15deg) saturate(1.5) brightness(0.92); transition: filter .5s ease; }
+figure:hover .duotone, figure:focus-within .duotone, figure:focus .duotone { filter: none; }
+
 /* Hero */
 .hero-photo { will-change: transform; }
 .hero-scrim { background:
@@ -132,7 +169,13 @@ body::after {
 .check { margin-top:.15rem; flex:none; height:1.15rem; width:1.15rem; border-radius:9999px; background:rgba(201,75,12,0.15); border:1px solid rgba(201,75,12,0.4); position:relative; }
 .check::after { content:""; position:absolute; left:.34rem; top:.16rem; width:.28rem; height:.5rem; border:solid #F4A06A; border-width:0 2px 2px 0; transform:rotate(45deg); }
 
-@media (prefers-reduced-motion: reduce) { .marquee,.floaty,.blink,.hotspot .pin::after { animation:none !important; } .lightsweep{ display:none; } .pre{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee,.floaty,.blink,.hotspot .pin::after { animation:none !important; } .lightsweep{ display:none; } .pre{ opacity:1; transform:none; }
+  .duotone { filter:none; } /* static full color */
+  .card-spot::before { display:none; }
+  .menu-overlay, .menu-overlay .m-item { transition:none !important; }
+  .menu-overlay .m-item { transform:none; transition-delay:0s !important; }
+}
 ::selection { background: rgba(201,75,12,0.35); color:#fff; }
 ::-webkit-scrollbar { width:10px; } ::-webkit-scrollbar-track { background:#14161F; }
 ::-webkit-scrollbar-thumb { background:#2D3142; border-radius:9999px; } ::-webkit-scrollbar-thumb:hover { background:#3A3F50; }

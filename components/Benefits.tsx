@@ -54,7 +54,7 @@ export default function Benefits() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {CARDS.map((c) => (
-            <div key={c.title} data-benefit className="rounded-3xl glass p-7 hover:border-ember-500/40 transition-all duration-300">
+            <div key={c.title} data-benefit className="card-spot rounded-3xl glass p-7 hover:border-ember-500/40 transition-all duration-300">
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-ember-500/12 border border-ember-500/30 mb-5">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">{c.icon}</svg>
               </span>

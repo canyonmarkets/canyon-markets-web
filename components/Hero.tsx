@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="lightsweep" id="lightsweep"></div>
       <div className="absolute inset-0 gridlines opacity-30"></div>
 
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-6 lg:px-10 pt-28 pb-20 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
+      <div data-hero-wrap className="relative z-10 mx-auto max-w-7xl w-full px-6 lg:px-10 pt-28 pb-20 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
         <div className="max-w-2xl">
           <div data-hero className="eyebrow text-ember-300 mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-ember-500/70"></span> Phoenix Metro · Zero-Cost Micro-Markets

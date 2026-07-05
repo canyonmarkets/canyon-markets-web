@@ -37,7 +37,7 @@ export default function WhoWeServe() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {CARDS.map((c) => c.featured ? (
-            <Link key={c.slug} href={`/industries/${c.slug}`} data-serve className="group sm:col-span-2 lg:col-span-1 lg:row-span-2 flex flex-col justify-between rounded-3xl border border-ember-500/40 bg-gradient-to-br from-ember-600/15 to-base p-8 hover:border-ember-500/70 transition-all duration-300 overflow-hidden relative">
+            <Link key={c.slug} href={`/industries/${c.slug}`} data-serve data-tilt className="card-spot group sm:col-span-2 lg:col-span-1 lg:row-span-2 flex flex-col justify-between rounded-3xl border border-ember-500/40 bg-gradient-to-br from-ember-600/15 to-base p-8 hover:border-ember-500/70 transition-all duration-300 overflow-hidden relative">
               <div className="absolute inset-0 gridlines opacity-30"></div>
               <div className="relative">
                 <div className="flex items-center justify-between">
@@ -55,7 +55,7 @@ export default function WhoWeServe() {
               </div>
             </Link>
           ) : (
-            <Link key={c.slug} href={`/industries/${c.slug}`} data-serve className="group rounded-3xl glass p-7 hover:border-ember-500/40 transition-all duration-300 flex flex-col">
+            <Link key={c.slug} href={`/industries/${c.slug}`} data-serve className="card-spot group rounded-3xl glass p-7 hover:border-ember-500/40 transition-all duration-300 flex flex-col">
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 mb-5">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">{ICONS[c.slug]}</svg>
               </span>
