@@ -43,13 +43,13 @@ export default function Concept() {
               <img src="/mm-office.png" width={1536} height={1024} alt="Micro-market layout: coolers, self-checkout kiosk, and snack racks" className="w-full h-auto block" />
               <div className="absolute inset-0 bg-gradient-to-t from-base/50 via-transparent to-transparent pointer-events-none"></div>
               {HOTSPOTS.map((h) => (
-                <div key={h.label} className="hotspot" style={{ left: h.left, top: h.top }} data-hot>
+                <button key={h.label} type="button" className="hotspot" style={{ left: h.left, top: h.top }} data-hot aria-label={`${h.label}: ${h.body}`}>
                   <div className="pin"></div>
                   <div className="tip glass-strong rounded-xl p-3 text-left">
                     <div className="font-mono text-[9px] tracking-widest text-ember-300 mb-1">{h.label.toUpperCase()}</div>
                     <div className="text-iron-200 text-xs leading-snug">{h.body}</div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
             <p className="mt-3 text-center font-mono text-[10px] tracking-[0.25em] uppercase text-iron-300">Tap the markers to explore the setup</p>

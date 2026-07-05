@@ -10,7 +10,7 @@ import JsonLd from '@/components/JsonLd';
 import { breadcrumbJsonLd, faqJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'What Is a Micro-Market? | Canyon Markets',
+  title: 'What Is a Micro-Market?',
   description: 'A micro-market is an unattended, self-serve mini convenience store built into your break room — open shelves, coolers, and self-checkout. Here’s how it works.',
   alternates: { canonical: '/what-is-a-micro-market' },
 };
